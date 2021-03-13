@@ -4,6 +4,7 @@ var ProgressBar = require('../src/main.js');
 function onLoad() {
     var bar = new ProgressBar.Circle('#progress', {
         duration: 4000,
+        countdown: true,
         from: {
             color: '#f00'
         },

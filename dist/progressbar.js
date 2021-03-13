@@ -218,6 +218,14 @@ Path.prototype.animate = function animate(progress, opts, cb) {
 
     var offset = this._getComputedDashOffset();
     var newOffset = this._progressToOffset(progress);
+    var offsetPhase = 1;
+
+    console.log("opts", opts)
+    if(opts.countdown) {
+        offset = this._progressToOffset(progress);
+        newOffset = this._getComputedDashOffset();
+        offsetPhase = -1;
+    }
 
     var self = this;
     this._tweenable = new Tweenable();
@@ -228,7 +236,7 @@ Path.prototype.animate = function animate(progress, opts, cb) {
         delay: opts.delay,
         easing: shiftyEasing,
         step: function(state) {
-            self.path.style.strokeDashoffset = state.offset;
+            self.path.style.strokeDashoffset = offsetPhase * state.offset;
             var reference = opts.shape || self;
             opts.step(state, reference, opts.attachment);
         }
